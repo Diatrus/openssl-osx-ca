@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-	echo "$(basename $0) [-h|--help] [-path osx-ca-certs] [\`which brew\`]"
+	echo "$(basename $0) [-h|--help] [-path osx-ca-certs] [\`which apt\`]"
 }
 
 osx_ca_certs=osx-ca-certs
@@ -16,8 +16,8 @@ while [ ! $# -eq 0 ]; do
 			shift
 			osx_ca_certs=$1
 			;;
-		*brew)
-			brew=$1
+		*apt)
+			apt=$1
 			;;
 		*)
 			echo "Unknown argument: $1" >&2
@@ -27,12 +27,12 @@ while [ ! $# -eq 0 ]; do
 	shift
 done
 
-if [[ "${brew}" = "" ]]; then
-	brew=$(which brew)
+if [[ "${apt}" = "" ]]; then
+	apt=$(which apt)
 fi
 
-if [[ ! -x "${brew}" ]]; then
-	echo "Homebrew not in PATH or given arguments, cannot continue"
+if [[ ! -x "${apt}" ]]; then
+	echo "APT not in PATH or given arguments, cannot continue"
 	usage
 	exit 1
 fi
@@ -47,18 +47,14 @@ err() {
 }
 
 genbundle() {
-	local sslimpl=$1
-
-	local list=$($brew list $sslimpl 2>/dev/null)
-	[[ -z $list ]] && continue
-
-	local openssl=$(echo "$list" | grep bin/openssl | head -n 1)
-
-	[[ "${openssl}" = "" ]] && echo "Homebrew $sslimpl not found" && err && return 1
+	if [ ! -x /usr/local/bin/openssl ]; then
+		echo "OpenSSL is not installed via APT! Cannot continue..."
+		err && return 1
+	fi
 
 	local openssldir=$($openssl version -d | cut -d '"' -f 2)
 
-	[[ "${openssldir}" = "" ]] && echo "$sslimpl directory not found" && err && return 1
+	[[ "${openssldir}" = "" ]] && echo "OpenSSL directory not found" && err && return 1
 
 	local tmpdir=$(/usr/bin/mktemp -d -t openssl_osx_ca)
 
@@ -83,9 +79,6 @@ genbundle() {
 	rm -r "${tmpdir}"
 }
 
-impls="$(brew list | grep -E '^((libre|open)ssl(@[0-9\.]+)?)$')"
-for sslimpl in $impls; do
-	genbundle $sslimpl
-done
+genbundle
 
 exit $exitcode

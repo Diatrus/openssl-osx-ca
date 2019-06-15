@@ -3,13 +3,13 @@
 <plist version="1.0">
 	<dict>
 		<key>Label</key>
-		<string>org.ra66i.openssl-osx-ca</string>
+		<string>us.diatr.openssl-osx-ca</string>
 
 		<key>ProgramArguments</key>
 		<array>
 			<string>{BINDIR}/openssl-osx-ca</string>
 			{ARGS}
-			<string>{BREW}</string>
+			<string>{APT}</string>
 		</array>
 
 		<key>Nice</key>

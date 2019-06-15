@@ -1,0 +1,2 @@
+#!/bin/bash
+launchctl unload /Library/LaunchAgents/us.diatr.openssl-osx-ca.plist

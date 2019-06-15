@@ -4,7 +4,7 @@ A simple tool and script intended to be run periodically by `launchd(8)` to sync
 an openssl style CA pem with the certificates found in the OSX Keychain(s).
 
 The original name is now a misnomer, as the software will manage certificate
-bundles for both openssl and libressl installed under Homebrew.
+bundles for openssl installed under APT.
 
 The Makefile contains a target called `osx-ca-certs` that acts a lot like
 `security export -t certs -p`, except that it does not dump certificates that
@@ -20,11 +20,9 @@ path, commonly `/usr/local/etc/openssl/cert.pem`.
 
 ## Installation
 
- * To install via homebrew:
+ * To install via APT:
    ``` bash
-      brew tap raggi/ale
-      brew install openssl-osx-ca
-      brew services start openssl-osx-ca
+      sudo apt install ca-certificates
    ```
 
  * To install standalone:
@@ -46,7 +44,7 @@ path, commonly `/usr/local/etc/openssl/cert.pem`.
  * Ruby 2.0.0+
  * LibreSSL users
  * OpenSSL users
- * Other brew / manually installed things that link a non-Apple TLS
+ * Other apt / manually installed things that link a non-Apple TLS
    implementations
 
 ## Known limitations & Notes
