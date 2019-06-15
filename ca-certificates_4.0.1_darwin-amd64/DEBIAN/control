@@ -1,0 +1,15 @@
+Package: ca-certificates
+Version: 4.0.1
+Architecture: darwin-amd64
+Maintainer: Hayden Seay <me@diatr.us>
+Installed-Size: 32
+Depends: openssl (>= 1.1.1)
+Enhances: openssl
+Section: misc
+Priority: optional
+Multi-Arch: foreign
+Description: Common CA certificates
+ Contains the certificate authorities shipped on your Mac to allow
+ SSL-based applications to check for the authenticity of SSL connections.
+ .
+ This automatically updates the certificates based on your keychain every hour using a LaunchAgent.

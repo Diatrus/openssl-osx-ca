@@ -1,0 +1,3 @@
+#!/bin/bash
+launchctl load /Library/LaunchAgents/us.diatr.openssl-osx-ca.plist
+/usr/local/bin/openssl-osx-ca -path /usr/local/bin/osx-ca-certs /usr/local/bin/apt

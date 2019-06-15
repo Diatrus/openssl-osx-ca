@@ -11,7 +11,6 @@ XMLARGS=$(ARGS:%=<string>%</string>)
 .PHONY: install
 .PHONY: uninstall
 .PHONY: copy
-.PHONY: package
 
 osx-ca-certs: osx-ca-certs.m
 	clang -framework CoreFoundation -framework Security $< -o $@
